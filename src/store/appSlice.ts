@@ -4,6 +4,7 @@ interface NameState {
 	name: string;
 	formSubmitted: boolean;
 	showHighScores: boolean;
+	uniqueLetters: string[];
 	enteredLetters: string[];
 	mistakes: number;
 }
@@ -12,6 +13,7 @@ const initialState: NameState = {
 	name: "",
 	formSubmitted: false,
 	showHighScores: false,
+	uniqueLetters: [],
 	enteredLetters: [],
 	mistakes: 0,
 };
@@ -31,20 +33,24 @@ export const appSlice = createSlice({
 		},
 		addLetter(state, action) {
 			state.enteredLetters.push(action.payload);
+
+			// Mistake logic. If letter doesn't exist in list of letters, add mistake
+			if (!state.uniqueLetters.includes(action.payload)) {
+				state.mistakes = state.mistakes + 1;
+			}
 		},
-		addMistake(state, action) {
-			const { enteredLetters } = state;
-			const letter = action.payload;
-
-			if (enteredLetters.includes(letter))
-				console.log(" Cannot add letter because it exists ");
-
-			state.mistakes = state.mistakes + 1;
+		setUniqueLetters(state, action) {
+			state.uniqueLetters = action.payload;
 		},
 	},
 });
 
-export const { changeName, formSubmitted, showHighScores, addLetter } =
-	appSlice.actions;
+export const {
+	changeName,
+	formSubmitted,
+	showHighScores,
+	addLetter,
+	setUniqueLetters,
+} = appSlice.actions;
 
 export default appSlice.reducer;

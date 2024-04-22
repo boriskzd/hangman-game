@@ -1,27 +1,43 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
-import { fetchData } from "../store/dataSlice";
-import { Box, Button, Skeleton, Typography } from "@mui/material";
-import Keyboard from "./Keyboard";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { Box, Skeleton, Typography } from "@mui/material";
 import LetterDisplay from "./LetterDisplay";
+import { useDispatch } from "react-redux";
+import { setUniqueLetters } from "../store/appSlice";
+import { useEffect } from "react";
 
 const HangmanDisplay = () => {
-	console.log("[Hangman Test] - RENDER");
+	const dispatch = useDispatch();
 	const data = useSelector((state: RootState) => state.data.data);
 	const mistakes = useSelector((state: RootState) => state.app.mistakes);
 	const enteredLetters = useSelector(
 		(state: RootState) => state.app.enteredLetters
 	);
 
+	useEffect(() => {
+		if (!data) return;
+
+		const uniqueLetters = Array.from(
+			new Set(data.content.toLowerCase().replace(/[^a-z]/g, ""))
+		);
+		console.log(11111111);
+		console.log(uniqueLetters);
+		console.log(22222222);
+		dispatch(setUniqueLetters(uniqueLetters));
+	}, [data]);
+
+	// useEffect(() => {
+	// 	dispatch(setUniqueLetters(uniqueLetters));
+	// }, [data, uniqueLetters]);
+
 	// TODO: find better way to check this. Should be displayed no matter if it is in this array or not
-	const nonLetters = [",", ".", "?", "!", ":", "'", "-", ";"];
+	const specialCharacters = [",", ".", "?", "!", ":", "'", "-", "—", ";"];
 
 	console.log("[HangmanDisplay]: entered letters");
 	console.log(enteredLetters);
 
-	console.log("DATA");
-	console.log(data);
+	// console.log("DATA");
+	// console.log(data);
 
 	if (!data)
 		return (
@@ -36,39 +52,42 @@ const HangmanDisplay = () => {
 	const questionLetterArray = [...question];
 
 	// TODO: Make it flexy
-	const Space = () => <Box sx={{ width: 20, height: 28 }} />;
+	const Space = () => (
+		<Box sx={{ width: 20, height: 28 }} key={Math.random()} />
+	);
 
-	const evoga = questionLetterArray.map((letter: string, i) => {
+	const allCharacters = questionLetterArray.map((letter: string, i) => {
+		const isSpecialKey = (letter: string) =>
+			specialCharacters.includes(letter);
+
 		let isUppercase = false;
-		let letter3 = letter;
-		if (letter === letter.toUpperCase()) {
-			console.log("UPPER case letter is: ", letter);
+		let finalLetter = letter;
+
+		function isLetter(letter: string) {
+			return /^[a-zA-Z]$/.test(letter);
+		}
+
+		const isUppercaseLetter = (letter: string) => {
+			return isLetter(letter) && letter === letter.toUpperCase();
+		};
+
+		if (isUppercaseLetter(letter)) {
 			isUppercase = true;
-			letter3 = letter.toLowerCase();
-			console.log("LOWER case letter is: ", letter3);
+			finalLetter = letter.toLowerCase();
 		}
 
-		const isSpecialKey = (letter: string) => nonLetters.includes(letter);
-
-		const checkIfHasLetter = (letter: string) =>
-			enteredLetters.includes(letter);
-
-		const isEnteredLetter = checkIfHasLetter(letter3);
-
-		if (isUppercase) {
-			console.log("xYz", letter3, "isEnteredLetter - ", isEnteredLetter);
-		}
+		const isEnteredLetter = enteredLetters.includes(finalLetter);
 
 		// TODO: addMistake
 
 		if (letter === " ") {
-			return <Space />;
+			return <Space key={i} />;
 		} else if (isSpecialKey(letter)) {
 			return <LetterDisplay letter={letter} isSpecialKey key={i} />;
 		} else {
 			return (
 				<LetterDisplay
-					letter={letter3}
+					letter={finalLetter}
 					isEnteredLetter={isEnteredLetter}
 					isUppercase={isUppercase}
 					key={i}
@@ -80,7 +99,7 @@ const HangmanDisplay = () => {
 	const Mistakes = () => {
 		const squares = [];
 		for (let i = 0; i < mistakes; i++) {
-			squares.push(<span>❌</span>);
+			squares.push(<span key={i}>❌</span>);
 		}
 		return squares;
 	};
@@ -97,7 +116,7 @@ const HangmanDisplay = () => {
 			<Box
 				sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, marginY: 6 }}
 			>
-				{evoga}
+				{allCharacters}
 			</Box>
 
 			<Typography textAlign="right">
