@@ -17,7 +17,7 @@ const Keyboard = () => {
 				direction="row"
 				useFlexGap
 				flexWrap="wrap"
-				sx={{ my: 2 }}
+				sx={{ justifyContent: "center", my: 2 }}
 			>
 				{firstHalf.map((letter) => (
 					<LetterButton letter={letter} key={letter} />
@@ -28,7 +28,7 @@ const Keyboard = () => {
 				direction="row"
 				useFlexGap
 				flexWrap="wrap"
-				sx={{ my: 2 }}
+				sx={{ justifyContent: "center", my: 2 }}
 			>
 				{secondHalf.map((letter) => (
 					<LetterButton letter={letter} key={letter} />

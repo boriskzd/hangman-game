@@ -1,11 +1,4 @@
-import {
-	Box,
-	Button,
-	FormControl,
-	FormGroup,
-	FormLabel,
-	TextField,
-} from "@mui/material";
+import { Box, Button, FormGroup, FormLabel, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { changeName, formSubmitted } from "../store/appSlice";
@@ -28,6 +21,9 @@ const NameInput = () => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
+
+		// TODO: add error handling and display that name cant be empty
+		// if (nameState === "") return;
 
 		dispatch(changeName(nameState));
 		dispatch(formSubmitted());
