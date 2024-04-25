@@ -120,7 +120,7 @@ const HangmanDisplay = () => {
 			</Box>
 
 			<Typography textAlign="right">
-				Author: - <b>{data.author}</b>
+				Author: <b>{data.author}</b>
 			</Typography>
 		</Box>
 	);

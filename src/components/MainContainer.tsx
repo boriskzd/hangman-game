@@ -4,7 +4,16 @@ function MainContainer({ children }: any) {
 	return (
 		<Paper
 			elevation={1}
-			sx={{ bgcolor: "#023f45", minHeight: "100vh", p: 5 }}
+			square
+			sx={{
+				bgcolor: "#023f45",
+				minHeight: "100vh",
+				p: {
+					xs: 1,
+					md: 3,
+					lg: 5,
+				},
+			}}
 		>
 			<Card
 				sx={{
