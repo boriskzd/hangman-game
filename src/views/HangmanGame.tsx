@@ -23,10 +23,6 @@ const HangmanGame = () => {
 
 	return (
 		<Box>
-			<Typography>
-				Player: <b>{name}</b>
-			</Typography>
-
 			{status === "loading" && <div>Loading...</div>}
 			{status === "failed" && <div>Error: {error}</div>}
 

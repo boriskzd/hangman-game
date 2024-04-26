@@ -12,8 +12,6 @@ const LetterDisplay = ({
 	isEnteredLetter?: boolean;
 	isUppercase?: boolean;
 }) => {
-	const [isOpened, setIsOpened] = useState(false);
-
 	const finalLetter = isUppercase ? letter.toUpperCase() : letter;
 
 	return (
@@ -28,7 +26,7 @@ const LetterDisplay = ({
 			}}
 		>
 			<Typography textAlign="center">
-				{isSpecialKey || isOpened || isEnteredLetter ? finalLetter : ""}
+				{isSpecialKey || isEnteredLetter ? finalLetter : ""}
 			</Typography>
 
 			<Box

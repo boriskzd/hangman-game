@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Box, Skeleton, Typography } from "@mui/material";
 import LetterDisplay from "./LetterDisplay";
+import Mistakes from "./Mistakes";
 import { useDispatch } from "react-redux";
 import { setUniqueLetters } from "../store/appSlice";
 import { useEffect } from "react";
@@ -9,7 +10,7 @@ import { useEffect } from "react";
 const HangmanDisplay = () => {
 	const dispatch = useDispatch();
 	const data = useSelector((state: RootState) => state.data.data);
-	const mistakes = useSelector((state: RootState) => state.app.mistakes);
+	const name = useSelector((state: RootState) => state.app.name);
 	const enteredLetters = useSelector(
 		(state: RootState) => state.app.enteredLetters
 	);
@@ -96,22 +97,27 @@ const HangmanDisplay = () => {
 		}
 	});
 
-	const Mistakes = () => {
-		const squares = [];
-		for (let i = 0; i < mistakes; i++) {
-			squares.push(<span key={i}>❌</span>);
-		}
-		return squares;
-	};
-
 	return (
 		<Box>
 			{/*  TODO: Display it nicely !!!  */}
-			<Typography>
-				<b>{data.content}</b>
-			</Typography>
 
-			<Mistakes />
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-between",
+					flexDirection: { xs: "column", sm: "row" },
+					alignItems: { xs: "center", sm: "flex-start" },
+				}}
+			>
+				<Box sx={{ mb: { xs: 2, sm: 0 }, width: 185 }}>
+					<Typography variant="overline">Player:</Typography>
+					<br />
+					<Typography variant="h6" sx={{ lineHeight: 1.25 }}>
+						<b>{name}</b>
+					</Typography>
+				</Box>
+				<Mistakes />
+			</Box>
 
 			<Box
 				sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, marginY: 6 }}
