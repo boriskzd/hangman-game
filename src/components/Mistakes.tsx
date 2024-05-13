@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Box, Typography } from "@mui/material";
+import { numberOfMistakes } from "../utils/constants";
 
 const Mistakes = () => {
 	const mistakes = useSelector((state: RootState) => state.app.mistakes);
@@ -10,7 +11,7 @@ const Mistakes = () => {
 			<Typography variant="overline">Mistakes:</Typography>
 			<Box sx={{ display: "flex", gap: 1 }}>
 				{/* the _ in .map((_, index) indicates that current element isn't used in mapping functions */}
-				{[...Array(6)].map((_, i) => (
+				{[...Array(numberOfMistakes)].map((_, i) => (
 					<Box
 						sx={{
 							width: 24,

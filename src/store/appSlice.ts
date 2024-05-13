@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { numberOfMistakes } from "../utils/constants";
 
-interface NameState {
+interface GameState {
 	name: string;
 	formSubmitted: boolean;
 	showHighScores: boolean;
@@ -9,7 +10,7 @@ interface NameState {
 	mistakes: number;
 }
 
-const initialState: NameState = {
+const initialState: GameState = {
 	name: "",
 	formSubmitted: false,
 	showHighScores: false,
@@ -37,6 +38,9 @@ export const appSlice = createSlice({
 			// Mistake logic. If letter doesn't exist in list of letters, add mistake
 			if (!state.uniqueLetters.includes(action.payload)) {
 				state.mistakes = state.mistakes + 1;
+				if (state.mistakes === numberOfMistakes) {
+					// TODO: END GAME
+				}
 			}
 		},
 		setUniqueLetters(state, action) {
