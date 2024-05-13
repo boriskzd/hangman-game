@@ -8,6 +8,7 @@ interface GameState {
 	uniqueLetters: string[];
 	enteredLetters: string[];
 	mistakes: number;
+	gameOver: boolean;
 }
 
 const initialState: GameState = {
@@ -17,6 +18,7 @@ const initialState: GameState = {
 	uniqueLetters: [],
 	enteredLetters: [],
 	mistakes: 0,
+	gameOver: false,
 };
 
 export const appSlice = createSlice({
@@ -39,7 +41,8 @@ export const appSlice = createSlice({
 			if (!state.uniqueLetters.includes(action.payload)) {
 				state.mistakes = state.mistakes + 1;
 				if (state.mistakes === numberOfMistakes) {
-					// TODO: END GAME
+					// TODO: add Button for New Game
+					state.gameOver = true;
 				}
 			}
 		},

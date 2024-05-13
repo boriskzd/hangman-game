@@ -5,13 +5,16 @@ const LetterDisplay = ({
 	isSpecialKey,
 	isEnteredLetter,
 	isUppercase,
+	isGameOver,
 }: {
 	letter: string;
 	isSpecialKey?: boolean;
 	isEnteredLetter?: boolean;
 	isUppercase?: boolean;
+	isGameOver?: boolean;
 }) => {
 	const finalLetter = isUppercase ? letter.toUpperCase() : letter;
+	const color = isGameOver && !isEnteredLetter ? "#C40C0C" : "";
 
 	return (
 		<Box
@@ -24,8 +27,10 @@ const LetterDisplay = ({
 				alignItems: "center",
 			}}
 		>
-			<Typography textAlign="center">
-				{isSpecialKey || isEnteredLetter ? finalLetter : ""}
+			<Typography textAlign="center" color={color}>
+				{isSpecialKey || isEnteredLetter || isGameOver
+					? finalLetter
+					: ""}
 			</Typography>
 
 			<Box

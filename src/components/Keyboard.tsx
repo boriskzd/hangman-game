@@ -1,4 +1,4 @@
-import { Stack, alpha } from "@mui/material";
+import { Stack } from "@mui/material";
 import LetterButton from "./LetterButton";
 import { alphabet_EN as alphabet } from "../utils/alphabet";
 

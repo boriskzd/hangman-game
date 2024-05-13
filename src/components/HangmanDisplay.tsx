@@ -11,6 +11,7 @@ const HangmanDisplay = () => {
 	const dispatch = useDispatch();
 	const data = useSelector((state: RootState) => state.data.data);
 	const name = useSelector((state: RootState) => state.app.name);
+	const gameOver = useSelector((state: RootState) => state.app.gameOver);
 	const enteredLetters = useSelector(
 		(state: RootState) => state.app.enteredLetters
 	);
@@ -33,9 +34,6 @@ const HangmanDisplay = () => {
 
 	// TODO: find better way to check this. Should be displayed no matter if it is in this array or not
 	const specialCharacters = [",", ".", "?", "!", ":", "'", "-", "—", ";"];
-
-	console.log("[HangmanDisplay]: entered letters");
-	console.log(enteredLetters);
 
 	// console.log("DATA");
 	// console.log(data);
@@ -90,6 +88,7 @@ const HangmanDisplay = () => {
 				<LetterDisplay
 					letter={finalLetter}
 					isEnteredLetter={isEnteredLetter}
+					isGameOver={gameOver}
 					isUppercase={isUppercase}
 					key={i}
 				/>
